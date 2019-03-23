@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "776386178217",
+    "firebase_url": "https://bloodbank-527e3.firebaseio.com",
+    "project_id": "bloodbank-527e3",
+    "storage_bucket": "bloodbank-527e3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:776386178217:android:84e448d6086da5e0",
+        "android_client_info": {
+          "package_name": "tharani.bloodbank"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "776386178217-g18p0on6qn11kkfc08oer0p7kblchuut.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBYspWGg-S9_hFhKAbP6l_Peh72KB-HUTQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
