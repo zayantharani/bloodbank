@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 
 import 'auth.dart';
 import 'rootpage.dart';
-// James Bond
+import 'package:firebase_database/firebase_database.dart';
+
+FirebaseDatabase database = FirebaseDatabase.instance;
 
 void main() => runApp(MyApp());
 
@@ -24,10 +26,47 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: RootPage(auth: new Auth()),
+  home: Home(),
+//      home: RootPage(auth: new Auth()),
     );
   }
 }
+class Home extends StatefulWidget{
+  @override
+  State<StatefulWidget> createState() {
+    // TODO: implement createState
+    return homeState();
+  }
+}
 
+class homeState extends State<Home>{
+ void callMe(){
+    // TODO: implement setState
+    database.reference().child("message").set({
+      "Name":"James Bond"
+    });
+//  @override
+//  void setState(fn) {
+//    super.setState(fn);
+//  }
+ }
+
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return new Scaffold(
+      appBar: new AppBar(title: new Text("Checking Firebase")
+      ,centerTitle: true,),
+      body: new Center(
+        child: new RaisedButton(onPressed: (){
+debugPrint ("Button Pressed");
+          callMe();
+        },
+        child: const Text("Press Me!"),
+        ),
+    ),
+    );
+  }
+}
 
 
