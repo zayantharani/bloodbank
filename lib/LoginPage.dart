@@ -35,6 +35,12 @@ class _LoginPageState extends State<LoginPage> {
         String userId = await widget.auth.signInWithEmailAndPassword(_email, _password);
         print("User signed in " +userId);
         widget.onSignedIn();
+        final scaffold = Scaffold.of(context);
+        scaffold.showSnackBar(
+            SnackBar(
+                content: const Text('User signed in')
+            )
+        );
         Navigator.push(context, MaterialPageRoute(builder: (context)=> HomePage()));
 
       }

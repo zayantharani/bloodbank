@@ -4,7 +4,6 @@ import './Bank.dart';
 import './Donor.dart';
 import './RequestBlood.dart';
 import './Settings.dart';
-//import 'package:firebase_database/firebase_database.dart';
 
 
 
@@ -22,9 +21,9 @@ class homeState extends State<HomePage> {
     // TODO: implement build
     return new Scaffold(
         appBar: new AppBar(
-          title: new Text("Blood Donation App"),
+          title: new Text("Blood Donation App", style: TextStyle(color: Colors.teal)),
           centerTitle: true,
-          backgroundColor: Colors.redAccent,
+          backgroundColor: Colors.black,
         ),
         drawer: Drawer(
           child: ListView(
@@ -41,11 +40,11 @@ class homeState extends State<HomePage> {
                     style: TextStyle(
                         letterSpacing: .5,
                         fontSize: 23.0,
-                        color: Colors.brown,
+                        color: Colors.teal,
                         fontWeight: FontWeight.w600),
                   ),
                   decoration: BoxDecoration(
-                    color: Colors.redAccent,
+                    color: Colors.black,
                   ),
                 ),
               ),
