@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+
+import 'auth.dart';
 import 'signup_page.dart';
 import 'ui/Home.dart';
 
 class LoginPage extends StatefulWidget {
+  final BaseAuth auth;
+  LoginPage({this.auth, this.onSignedIn});
+  final VoidCallback onSignedIn;
+
   @override
   _LoginPageState createState() => _LoginPageState();
 }
@@ -27,13 +32,13 @@ class _LoginPageState extends State<LoginPage> {
 
     if (validateAndSave()){
       try {
-        FirebaseUser user = await FirebaseAuth.instance.signInWithEmailAndPassword(email: _email, password: _password);
+        String userId = await widget.auth.signInWithEmailAndPassword(_email, _password);
+        print("User signed in " +userId);
+        widget.onSignedIn();
+        Navigator.push(context, MaterialPageRoute(builder: (context)=> HomePage()));
 
-        print("User signed in");
-        Navigator.push(context, MaterialPageRoute(builder: (context)=> Home()));
       }
       catch (e){
-
         print("User not signed in " + e.toString());
       }
     }
@@ -123,7 +128,7 @@ class _LoginPageState extends State<LoginPage> {
   }
   Future moveToSignIn() {
 
-    Navigator.push(context, MaterialPageRoute(builder: (context)=>SignUpPage()));
+    Navigator.push(context, MaterialPageRoute(builder: (context)=>SignUpPage(auth: new Auth ())));
 
   }
 }

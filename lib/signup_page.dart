@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+
 import 'LoginPage.dart';
+import 'auth.dart';
 
 class SignUpPage extends StatefulWidget {
+  final BaseAuth auth;
+  SignUpPage({this.auth});
+
   @override
   State<StatefulWidget> createState() => new _SignUpPageState();
 }
@@ -37,9 +41,10 @@ class _SignUpPageState extends State<SignUpPage> {
 
     if (validateAndSave()){
       try {
-        FirebaseUser user = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: _email, password: _password);
-        print("User created");
-        Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginPage()));
+
+        String userId = await widget.auth.createUserWithEmailAndPassword(_email, _password);
+        print("User created " + userId);
+        Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginPage(auth: new Auth())));
       }
       catch (e){
 
@@ -50,7 +55,7 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 
   Future moveToLogin () {
-    Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginPage()));
+    Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginPage(auth: new Auth())));
   }
 
   void _onChanged1(bool value) => setState(() => _isBloodBank = value);

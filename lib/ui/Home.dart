@@ -1,24 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
-//import 'package:firebase_database/firebase_database.dart';
-import './Settings.dart';
+
 import './Bank.dart';
-import './RequestBlood.dart';
 import './Donor.dart';
+import './RequestBlood.dart';
+import './Settings.dart';
+//import 'package:firebase_database/firebase_database.dart';
 
-void main() => runApp(new MaterialApp(
-  title: "Blood Donation App",
-  home: new Home(),
-));
 
-class Home extends StatefulWidget {
+
+class HomePage extends StatefulWidget {
+
   @override
   State<StatefulWidget> createState() {
     return new homeState();
   }
 }
 
-class homeState extends State<Home> {
+class homeState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build

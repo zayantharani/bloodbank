@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'signup_page.dart';
+
+import 'auth.dart';
+import 'rootpage.dart';
 
 
 void main() => runApp(MyApp());
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: SignUpPage(),
+      home: RootPage(auth: new Auth()),
     );
   }
 }

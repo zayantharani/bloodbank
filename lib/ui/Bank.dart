@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import './Settings.dart';
-import './RequestBlood.dart';
+
 import './Donor.dart';
 import './Home.dart';
+import './RequestBlood.dart';
+import './Settings.dart';
 
 class Bank extends StatefulWidget {
   @override
@@ -65,7 +66,7 @@ class BankState extends State<Bank> {
 }
 
 
-class homeState extends State<Home> {
+class homeState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
