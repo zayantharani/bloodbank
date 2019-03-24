@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:firebase_database/firebase_database.dart';
 import 'LoginPage.dart';
 import 'auth.dart';
 
@@ -18,12 +18,14 @@ enum FormType {
 
 class _SignUpPageState extends State<SignUpPage> {
   final _formKey = new GlobalKey<FormState>();
+  FirebaseDatabase database = FirebaseDatabase.instance;
 
   String _fullName;
   String _email;
   String _password;
   String _phoneNumber;
   bool _isBloodBank = false;
+  String _bloodGroup;
 
 
 
@@ -44,6 +46,14 @@ class _SignUpPageState extends State<SignUpPage> {
 
         String userId = await widget.auth.createUserWithEmailAndPassword(_email, _password);
         print("User created " + userId);
+        database.reference().child('Users').child(userId).set({
+          
+          "Full Name": _fullName,
+          "Email" : _email,
+          "Phone" : _phoneNumber,
+          "isBloodBank" : _isBloodBank,
+//          "BloodGroup" : _bloodGroup
+        });
         Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginPage(auth: new Auth())));
       }
       catch (e){
