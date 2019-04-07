@@ -19,6 +19,8 @@ enum FormType {
 
 class _SignUpPageState extends State<SignUpPage> {
   final _formKey = new GlobalKey<FormState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
   FirebaseDatabase database = FirebaseDatabase.instance;
 
   String _fullName;
@@ -27,9 +29,6 @@ class _SignUpPageState extends State<SignUpPage> {
   String _phoneNumber;
   bool _isBloodBank = false;
   String _bloodGroup;
-
-
-
 
   bool validateAndSave() {
     final form = _formKey.currentState;
@@ -56,18 +55,23 @@ class _SignUpPageState extends State<SignUpPage> {
           "isBloodBank" : _isBloodBank,
           "BloodGroup" : _bloodGroup
         });
-        Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginPage(auth: new Auth())));
-        final scaffold = Scaffold.of(context);
-        scaffold.showSnackBar(
+
+        _scaffoldKey.currentState.showSnackBar(
             SnackBar(
-                content: const Text('User created')
-            )
-        );
+              content: new Text('User signed in'),
+              duration: new Duration(seconds: 10),
+            ));
+        Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginPage(auth: new Auth())));
 
       }
       catch (e){
 
         print("User not created " + e.toString());
+        _scaffoldKey.currentState.showSnackBar(
+            SnackBar(
+              content: new Text(e.toString()),
+              duration: new Duration(seconds: 10),
+            ));
     }
     }
 
@@ -85,7 +89,9 @@ class _SignUpPageState extends State<SignUpPage> {
 
   @override
   Widget build(BuildContext context) {
+
     return new Scaffold(
+      resizeToAvoidBottomPadding: false,
         backgroundColor: Colors.black,
         body: new Stack(fit: StackFit.expand, children: <Widget>[
 

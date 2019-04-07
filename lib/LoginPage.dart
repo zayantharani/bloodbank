@@ -17,6 +17,8 @@ class _LoginPageState extends State<LoginPage> {
 
   String _email,_password;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
 
   bool validateAndSave() {
     final form = _formKey.currentState;
@@ -31,28 +33,39 @@ class _LoginPageState extends State<LoginPage> {
   Future validateAndSubmit () async {
 
     if (validateAndSave()){
-      try {
+
+      try{
+
         String userId = await widget.auth.signInWithEmailAndPassword(_email, _password);
         print("User signed in " +userId);
-        widget.onSignedIn();
-        final scaffold = Scaffold.of(context);
-        scaffold.showSnackBar(
+        _scaffoldKey.currentState.showSnackBar(
             SnackBar(
-                content: const Text('User signed in')
-            )
-        );
+              content: new Text('User signed in'),
+              duration: new Duration(seconds: 10),
+            ));
         Navigator.push(context, MaterialPageRoute(builder: (context)=> HomePage()));
+        widget.onSignedIn();
 
       }
       catch (e){
-        print("User not signed in " + e.toString());
+        print("User not signed in" + e.toString());
+        _scaffoldKey.currentState.showSnackBar(
+            SnackBar(
+              content: new Text(e.toString()),
+              duration: new Duration(seconds: 10),
+            ));
       }
+
+
+
     }
 
   }
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
+      key: _scaffoldKey,
+      resizeToAvoidBottomPadding: false,
       backgroundColor: Colors.black,
       body: new Stack(
         fit: StackFit.expand,
@@ -115,8 +128,8 @@ class _LoginPageState extends State<LoginPage> {
                             child: new Text("Log In"),
                             onPressed: validateAndSubmit),
                         new FlatButton(
-                          child: new Text("Dont have an account? Sign in"),
-                          onPressed : moveToSignIn,
+                          child: new Text("Dont have an account? Sign up"),
+                          onPressed : moveToSignUp,
                         )
                       ],
 
@@ -132,7 +145,7 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
-  Future moveToSignIn() {
+  Future moveToSignUp() {
 
     Navigator.push(context, MaterialPageRoute(builder: (context)=>SignUpPage(auth: new Auth ())));
 
