@@ -1,3 +1,4 @@
+import 'package:bloodbank/auth.dart';
 import 'package:flutter/material.dart';
 
 import './Bank.dart';
@@ -9,10 +10,14 @@ import './Settings.dart';
 
 class HomePage extends StatefulWidget {
 
+  final BaseAuth auth;
+  HomePage({this.auth});
+
   @override
   State<StatefulWidget> createState() {
     return new homeState();
   }
+
 }
 
 class homeState extends State<HomePage> {
@@ -81,7 +86,7 @@ class homeState extends State<HomePage> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => RequestBlood(),
+                        builder: (context) => RequiredBlood(),
                       ));
                   // Update the state of the app
                   // ...

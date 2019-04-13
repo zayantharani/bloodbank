@@ -46,7 +46,5 @@ class _RootPageState extends State<RootPage> {
       );
     else
       return new HomePage();
-
-
   }
 }

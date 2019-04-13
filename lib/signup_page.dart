@@ -82,7 +82,6 @@ class _SignUpPageState extends State<SignUpPage> {
     Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginPage(auth: new Auth())));
   }
 
-  void _onChanged1(bool value) => setState(() => _isBloodBank = value);
 
 
 
@@ -142,12 +141,19 @@ class _SignUpPageState extends State<SignUpPage> {
                         validator: (input) => input.isEmpty ? 'Phone Number cannot be empty' : null,
                         onSaved: (input) => _phoneNumber = input,
                       ),
+                      SwitchListTile(
+                          title: const Text('Monthly Newsletter'),
+                          value: _isBloodBank,
+                          onChanged: (bool val) =>
+                              setState(() => _isBloodBank = val)
+                      ),
                       new Row(
                         children: <Widget>[
                       new Text("Blood Group",style: TextStyle(fontSize: 20.0,fontWeight:  FontWeight.bold, color: Colors.teal)),
                       new Padding(
                           padding: const EdgeInsets.only(right: 100.0)
                       ),
+
                       DropdownButton<String>(
                           value: _bloodGroup,
                           onChanged: (String newValue) {
