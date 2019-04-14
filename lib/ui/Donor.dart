@@ -1,4 +1,7 @@
+import 'dart:core';
+
 import 'package:flutter/material.dart';
+
 
 class Donor extends StatefulWidget {
   @override
@@ -9,15 +12,22 @@ class Donor extends StatefulWidget {
 }
 
 class DonorState extends State<Donor> {
+
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.redAccent,
-        title: Text("Your Donation Will Save a Life"),
-      ),
-      body: new Text("Patients requests will be shown here"),
-    );
+        appBar: AppBar(
+          backgroundColor: Colors.redAccent,
+          title: Text("Your Donation Will Save a Life"),
+        ),
+
+            );
+
+
   }
+
+
+
 }

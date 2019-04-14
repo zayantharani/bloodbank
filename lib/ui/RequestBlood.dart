@@ -37,6 +37,8 @@ class _RequiredBloodState extends State<RequiredBlood> {
 
   int _PayValue = 0;
   String _BloodGrp,_Qty,_Priority ;
+
+
   bool _Pay ;
   String _value = null;
   List<String> _values = new List<String>();
@@ -48,6 +50,8 @@ class _RequiredBloodState extends State<RequiredBlood> {
     // TODO: implement initState
     _values.addAll(["A+","A-","B+","B-","O+","O-","AB+","AB-",]);
     _value = _values.elementAt(0);
+    _Qty = "10";
+
     super.initState();
   }
 
@@ -113,7 +117,7 @@ class _RequiredBloodState extends State<RequiredBlood> {
                         },
                         onSaved: (input)
                         {
-                          _Qty = input;
+                          //      _Qty = input;
                         },
 
                         decoration: new InputDecoration(
@@ -182,5 +186,3 @@ class _RequiredBloodState extends State<RequiredBlood> {
 
 
 }
-
-

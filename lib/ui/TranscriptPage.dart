@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
@@ -15,28 +16,48 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
+  DateTime date;
   String _BloodGrp, _Qty, _Priority,fullname,phoneNum;
   int _PayValue;
   _MyHomePageState( this._Qty, this._BloodGrp,);
+  static String FName,Phone;
 
   final DatabaseReference database = FirebaseDatabase.instance.reference().child("RequiredBlood");
-  final reqBloodReference = FirebaseDatabase.instance.reference().child("RequiredBlood");
-
-  StreamSubscription<Event> _onRequestAdded;
-
+  FirebaseAuth auth = FirebaseAuth.instance;
   @override
   void initState() {
     super.initState();
-    _onRequestAdded = reqBloodReference.onChildAdded.listen(onReqAdded);
 
+    var n = getUserName();
   }
+
+  Future<String> getUserName() async {
+
+    final FirebaseUser user = await auth.currentUser();
+
+    var response = await FirebaseDatabase.instance
+        .reference()
+        .child("Users").child(user.uid).child('Full Name')
+        .once();
+    var response2 = await FirebaseDatabase.instance
+        .reference()
+        .child("Users").child(user.uid).child('Phone')
+        .once();
+
+    FName = response.value.toString();
+    Phone = response2.value.toString();
+  }
+
+
+
   _savedData() {
+
     database.push().set({
       'Blood Group': _BloodGrp,
-      'Quantity': '43',
-      'Full name': fullname,
-      'Phone num:': '03213700598',
+      'Quantity': _Qty,
+      'Full name': FName,
+      'Phone num': Phone,
+      //  'Date:' : date,
     });
   }
 
@@ -58,18 +79,18 @@ class _MyHomePageState extends State<MyHomePage> {
                         width: 150.0,
                         height: 150.0,
                         decoration: BoxDecoration(
-                            color: Colors.red,
+                            color: Colors.white,
                             image: DecorationImage(
                                 image: NetworkImage(
-                                    'https://pixel.nymag.com/imgs/daily/vulture/2017/06/14/14-tom-cruise.w700.h700.jpg'),
+                                    'https://www.law.berkeley.edu/wp-content/uploads/2015/04/Blank-profile.png'),
                                 fit: BoxFit.cover),
                             borderRadius: BorderRadius.all(Radius.circular(75.0)),
                             boxShadow: [
                               BoxShadow(blurRadius: 7.0, color: Colors.black)
                             ])),
-                    SizedBox(height: 90.0),
+                    SizedBox(height: 40.0),
                     Text(
-                      'Zayan Tharani',
+                      FName,
                       style: TextStyle(
                           fontSize: 30.0,
                           fontWeight: FontWeight.bold,
@@ -79,7 +100,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     new Row(
                       children: <Widget>[
                         new Text(
-                          "Blood Group",
+                          "Blood Group    ",
                           style: TextStyle(
                               fontSize: 15,
                               fontFamily: 'Montserrat',
@@ -98,7 +119,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     new Row(
                       children: <Widget>[
                         new Text(
-                          "Quantity",
+                          "Quantity   ",
                           style: TextStyle(
                               fontSize: 15,
                               fontFamily: 'Montserrat',
@@ -134,11 +155,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
 
 
-  void onReqAdded(Event event) {
 
-
-
-  }
 }
 
 class getClipper extends CustomClipper<Path> {

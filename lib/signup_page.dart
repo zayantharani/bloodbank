@@ -27,6 +27,7 @@ class _SignUpPageState extends State<SignUpPage> {
   String _email;
   String _password;
   String _phoneNumber;
+  String _address;
   bool _isBloodBank = false;
   String _bloodGroup;
 
@@ -48,12 +49,13 @@ class _SignUpPageState extends State<SignUpPage> {
         String userId = await widget.auth.createUserWithEmailAndPassword(_email, _password);
         print("User created " + userId);
         database.reference().child('Users').child(userId).set({
-          
+
           "Full Name": _fullName,
           "Email" : _email,
           "Phone" : _phoneNumber,
           "isBloodBank" : _isBloodBank,
-          "BloodGroup" : _bloodGroup
+          "BloodGroup" : _bloodGroup,
+          "Address" : _address
         });
 
         _scaffoldKey.currentState.showSnackBar(
@@ -141,11 +143,23 @@ class _SignUpPageState extends State<SignUpPage> {
                         validator: (input) => input.isEmpty ? 'Phone Number cannot be empty' : null,
                         onSaved: (input) => _phoneNumber = input,
                       ),
-                      SwitchListTile(
-                          title: const Text('Monthly Newsletter'),
-                          value: _isBloodBank,
-                          onChanged: (bool val) =>
-                              setState(() => _isBloodBank = val)
+                      new TextFormField(
+                        decoration: new InputDecoration(
+                          labelText: "Address",
+                        ),
+                        keyboardType: TextInputType.multiline,
+                        validator: (input) => input.isEmpty ? 'Address cannot be empty' : null,
+                        onSaved: (input) => _address = input,
+                      ),
+                      new CheckboxListTile( //                   <--- CheckboxListTile
+                        title: Text('Are you a blood bank?'),
+                        value: _isBloodBank,
+                        onChanged: (newValue) {
+                          displayTable ();
+                          setState(() {
+                            _isBloodBank = newValue;
+                          });
+                      },
                       ),
                       new Row(
                         children: <Widget>[
@@ -188,4 +202,36 @@ class _SignUpPageState extends State<SignUpPage> {
           ])
         );
   }
+}
+
+Widget displayTable() {
+  return Table(
+    border: TableBorder.all(color: Colors.black, width: 1.0),
+    children: [
+      TableRow (
+  children: [
+    TableCell (
+      child: Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        new Text("Blood Group"),
+        new Text("Quanitity")
+  ],
+  ),
+  ),
+  TableCell (
+  child: Row(
+  mainAxisAlignment: MainAxisAlignment.center,
+  children: <Widget>[
+  new Text("A+"),
+  new TextField(keyboardType: TextInputType.number,
+  )
+  ],
+  )),
+
+    ]
+  )
+  ]
+  );
+
 }
