@@ -72,18 +72,17 @@ class DonorState extends State<Donor> {
         );
         userdata.add(d);
       }
+      print("user data in get data" + userdata [0].num);
+      print("user id in get data" + userdata [0].id);
       id = userdata[0].id;
-      setState(() {
-      });
+
     });
 
-    var response = await FirebaseDatabase.instance
-        .reference()
-        .child("Users").child(id).child('Full Name')
-        .once();
+    print("Before res");
 
-    var FName = response.value.toString();
-    print(FName);
+    print("After res");
+
+
   }
 
   @override
@@ -138,7 +137,27 @@ class DonorState extends State<Donor> {
     );
   }
 
-  Alert(String num) {
-    print(num);
+  Alert(String num) async {
+
+    var response = await FirebaseDatabase.instance
+        .reference()
+        .child("Users").child(userdata[0].id).child('Full Name')
+        .once();
+    String FName = response.value.toString();
+    print("Fname " + FName);
+    String zayan = "Zayan";
+
+    FirebaseDatabase.instance.reference().child('Users').child(userdata[0].id).set({
+      "Full Name" : zayan
+    });
+
+    var response1 = await FirebaseDatabase.instance
+        .reference()
+        .child("Users").child(userdata[0].id).child('Full Name')
+        .once();
+    String FName1 = response.value.toString();
+    print("Fname edited " + FName);
+
+
   }
 }
