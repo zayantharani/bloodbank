@@ -1,9 +1,8 @@
 import 'dart:async';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-
+import 'Home.dart';
 class MyHomePage extends StatefulWidget {
   String _BloodGrp, _Priority;
   String _Qty;
@@ -21,7 +20,7 @@ class _MyHomePageState extends State<MyHomePage> {
   int _PayValue;
   _MyHomePageState( this._Qty, this._BloodGrp,);
   static String FName,Phone;
-
+  String DateNow;
   final DatabaseReference database = FirebaseDatabase.instance.reference().child("RequiredBlood");
   FirebaseAuth auth = FirebaseAuth.instance;
   @override
@@ -29,6 +28,9 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
 
     var n = getUserName();
+
+    DateTime today = new DateTime.now();
+    DateNow ="${today.year.toString()}-${today.month.toString().padLeft(2,'0')}-${today.day.toString().padLeft(2,'0')}";
   }
 
   Future<String> getUserName() async {
@@ -57,8 +59,9 @@ class _MyHomePageState extends State<MyHomePage> {
       'Quantity': _Qty,
       'Full name': FName,
       'Phone num': Phone,
-      //  'Date:' : date,
+      'Date:' : DateNow,
     });
+    Navigator.push(context, MaterialPageRoute(builder: (context)=>HomePage()));
   }
 
   @override
@@ -135,6 +138,69 @@ class _MyHomePageState extends State<MyHomePage> {
                       ],
                     ),
                     SizedBox(height: 15.0),
+
+                    new Row(
+                      children: <Widget>[
+                        new Text(
+                          "Phone    ",
+                          style: TextStyle(
+                              fontSize: 15,
+                              fontFamily: 'Montserrat',
+                              fontWeight: FontWeight.bold),
+                        ),
+                        new Text(
+                          Phone,
+                          style: TextStyle(
+                              fontSize: 15,
+                              fontFamily: 'Montserrat',
+                              fontWeight: FontWeight.bold),
+                        )
+                      ],
+                    ),
+
+
+
+                    SizedBox(height: 15.0),
+
+
+                    new Row(
+                      children: <Widget>[
+                        new Text(
+                          "Date    ",
+                          style: TextStyle(
+                              fontSize: 15,
+                              fontFamily: 'Montserrat',
+                              fontWeight: FontWeight.bold),
+                        ),
+                        new Text(
+                          DateNow,
+                          style: TextStyle(
+                              fontSize: 15,
+                              fontFamily: 'Montserrat',
+                              fontWeight: FontWeight.bold),
+                        )
+                      ],
+                    ),
+
+
+
+                    SizedBox(height: 15.0),
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                     new Container(
                       child: new RaisedButton(
                         color: Colors.grey,
