@@ -78,11 +78,6 @@ class DonorState extends State<Donor> {
 
     });
 
-    print("Before res");
-
-    print("After res");
-
-
   }
 
   @override

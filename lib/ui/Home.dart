@@ -1,4 +1,6 @@
+import 'package:bloodbank/LoginPage.dart';
 import 'package:bloodbank/auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import './Bank.dart';
@@ -21,6 +23,7 @@ class HomePage extends StatefulWidget {
 }
 
 class homeState extends State<HomePage> {
+  FirebaseAuth auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -108,7 +111,13 @@ class homeState extends State<HomePage> {
               ListTile(
                 title: Text('Logout'),
                 onTap: () {
+                  auth.signOut();
                   Navigator.pop(context);
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => LoginPage(),
+                      ));
                   // Update the state of the app
                   // ...
                 },
