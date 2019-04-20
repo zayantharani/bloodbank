@@ -9,6 +9,7 @@ class RequiredBlood extends StatefulWidget {
 
 class _RequiredBloodState extends State<RequiredBlood> {
 
+
   double result = 0.0;
   String finalResult = "";
   int radio = 0;
@@ -39,33 +40,55 @@ class _RequiredBloodState extends State<RequiredBlood> {
   String _BloodGrp,_Qty,_Priority ;
 
 
-  bool _Pay ;
-  String _value = null;
-  List<String> _values = new List<String>();
+
+  String _value = "";
+  String _PAY ="0";
+  List<String> _values = ["A+","A-","B+","B-","O+","O-","AB+","AB-"];
+
+
+  String _value2 = "";
+  List<String> _values2 = ["1","2","3","4","5","6"];
+
   final GlobalKey<FormState> _formkey = new GlobalKey<FormState>();
-  String _radioValue1;
-  String _handleValue;
+
   @override
   void initState() {
-    // TODO: implement initState
-    _values.addAll(["A+","A-","B+","B-","O+","O-","AB+","AB-",]);
-    _value = _values.elementAt(0);
-    _Qty = "10";
 
     super.initState();
   }
 
+  _RequiredBloodState(){
+    _BloodGrp = "A+";
+    _value = _values.elementAt(0);
+    _Qty = "1";
+    _value2 = _values2.elementAt(0);
+
+  }
   void _onChanged(String value){
     setState(() {
       _value = value;
     });
   }
+  void _onChanged2(String value){
+    setState(() {
+      _value2 = value;
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      appBar: new AppBar(
-        title: new Text('Request Blood'),
-      ),
+        appBar: AppBar(
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              Image.network('https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/Blood_drop.svg/367px-Blood_drop.svg.png',
+              fit: BoxFit.scaleDown,
+              ),
+              Container(
+                  padding: const EdgeInsets.all(15.0), child: Text('Request Blood',style: TextStyle(fontSize: 20),))
+            ],
+          ),
+        ),
       body: new SingleChildScrollView(
         child: new Form(
             key: _formkey,
@@ -94,7 +117,6 @@ class _RequiredBloodState extends State<RequiredBlood> {
                               padding: const EdgeInsets.only(right: 100.0)
                           ),
                           new DropdownButton(
-
                               value: _value,
                               items: _values.map((String value){
                                 return new DropdownMenuItem(
@@ -109,50 +131,39 @@ class _RequiredBloodState extends State<RequiredBlood> {
                           )
                         ],
                       ),
-                      new TextFormField(
-                        validator: (input){
-                          if(input.isEmpty){
-                            return 'Please Type Bottle Quantity';
-                          }
-                        },
-                        onSaved: (input)
-                        {
-                          //      _Qty = input;
-                        },
-
-                        decoration: new InputDecoration(
-                            labelText: "Quantity",
-                            fillColor: Colors.amberAccent
-                        ),
-                        keyboardType: TextInputType.number,
-                      ),
-
                       new Row(
-
                         children: <Widget>[
-                          new Text("Payment",style: TextStyle(fontSize: 20.0,fontWeight:  FontWeight.bold),),
-                          new Radio<int>(
-                              activeColor: Colors.green,
-                              value: 0,
-                              groupValue: radio,
-                              onChanged: getWeight),
-                          new Text(
-                            "Yes",
-                            style: new TextStyle(color: Colors.black),
+                          new Text("Quantity",style: TextStyle(fontSize: 20.0,fontWeight:  FontWeight.bold),),
+                          new Padding(
+                              padding: const EdgeInsets.only(right: 150.0)
                           ),
-                          new Radio<int>(
-                              activeColor: Colors.red,
-                              value: 1,
-                              groupValue: radio,
-                              onChanged: getWeight),
-                          new Text(
-                            "No",
-                            style: new TextStyle(color: Colors.black),
+                          new DropdownButton(
+                              value: _value2,
+                              items: _values2.map((String value){
+                                return new DropdownMenuItem(
+                                    value: value,
+                                    child: new Text(value)
+                                );
+                              }).toList(),
+                              onChanged: (String value){
+                                _onChanged2(value);
+                                _Qty = value;
+                              }
                           ),
+
                         ],
+
+                      ),
+                      new TextFormField(
+                        textAlign: TextAlign.end,
+                        onSaved: (input) => _PAY = input,
+                        decoration: new InputDecoration(
+                          labelText: "Payment",
+                          hintText: "0",
+                          contentPadding: EdgeInsets.all(10)
+                        ),
                       ),
                       new Padding(padding: EdgeInsets.all(20.5)),
-
                       new Center(
                         child: Container(
                           child: new RaisedButton(

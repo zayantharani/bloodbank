@@ -126,7 +126,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               fontWeight: FontWeight.bold),
                         ),
                         new Text(
-                          _BloodGrp,
+                          _Qty,
                           style: TextStyle(
                               fontSize: 15,
                               fontFamily: 'Montserrat',
