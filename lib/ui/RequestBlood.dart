@@ -179,14 +179,6 @@ class _RequiredBloodState extends State<RequiredBlood> {
                         ),
                       )
 
-//                    new Text(
-//                      finalResult,
-//                      style: new TextStyle(
-//                          color: Colors.red,
-//                          fontSize: 19.4,
-//                          fontWeight: FontWeight.w500),
-//                    )
-
                     ],
                   ),
                 ))),

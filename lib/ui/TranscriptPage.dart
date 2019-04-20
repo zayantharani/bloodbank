@@ -3,6 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'Home.dart';
+import 'package:flutter/cupertino.dart';
+
 class MyHomePage extends StatefulWidget {
   String _BloodGrp, _Priority;
   String _Qty;
@@ -61,7 +63,21 @@ class _MyHomePageState extends State<MyHomePage> {
       'Phone num': Phone,
       'Date:' : DateNow,
     });
-    Navigator.push(context, MaterialPageRoute(builder: (context)=>HomePage()));
+
+    showDialog(
+        context: context,
+        builder: (context) {
+
+          return  AlertDialog(
+            shape: RoundedRectangleBorder(side: BorderSide(width: 4)),
+            title: Text(_BloodGrp+" requested to Donors"),
+          );
+        });
+
+    Future.delayed(Duration(seconds: 1), () {
+        Navigator.of(context).pop(true);
+      Navigator.push(context, MaterialPageRoute(builder: (context)=>HomePage()));
+    });
   }
 
   @override
