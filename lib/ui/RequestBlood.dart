@@ -35,8 +35,6 @@ class _RequiredBloodState extends State<RequiredBlood> {
     });
   }
 
-
-  int _PayValue = 0;
   String _BloodGrp,_Qty,_Priority ;
 
 
@@ -59,8 +57,10 @@ class _RequiredBloodState extends State<RequiredBlood> {
 
   _RequiredBloodState(){
     _BloodGrp = "A+";
+    _value = "+A";
     _value = _values.elementAt(0);
     _Qty = "1";
+    _value2 = "1";
     _value2 = _values2.elementAt(0);
 
   }
@@ -170,8 +170,11 @@ class _RequiredBloodState extends State<RequiredBlood> {
                             color: Colors.redAccent,
                             child: new Text("Request",style: TextStyle(color: Colors.white),),
                             onPressed: (){
+                             print("BLOOD GRP = "+ _BloodGrp.toString());
+                             print("Quantity = "+ _Qty.toString());
+
                               Navigator.push(context,MaterialPageRoute(builder: (context)=>MyHomePage(_Qty, _BloodGrp)));
-                            },
+                              },
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(30.0)
                             ),
