@@ -1,13 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import 'auth.dart';
-import 'signup_page.dart';
 import 'ui/Home.dart';
 
 class LoginPage extends StatefulWidget {
-  final BaseAuth auth;
-  LoginPage({this.auth, this.onSignedIn});
-  final VoidCallback onSignedIn;
 
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -18,7 +14,7 @@ class _LoginPageState extends State<LoginPage> {
   String _email,_password;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-
+  FirebaseAuth auth = FirebaseAuth.instance;
 
   bool validateAndSave() {
     final form = _formKey.currentState;
@@ -31,20 +27,18 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Future validateAndSubmit () async {
-
     if (validateAndSave()){
-
       try{
-
-        String userId = await widget.auth.signInWithEmailAndPassword(_email, _password);
-        print("User signed in " +userId);
+        await auth.signInWithEmailAndPassword(
+            email: _email, password: _password);
+        print("User signed in");
         _scaffoldKey.currentState.showSnackBar(
             SnackBar(
               content: new Text('User signed in'),
               duration: new Duration(seconds: 10),
             ));
         Navigator.push(context, MaterialPageRoute(builder: (context)=> HomePage()));
-        widget.onSignedIn();
+//        widget.onSignedIn();
 
       }
       catch (e){
@@ -55,12 +49,9 @@ class _LoginPageState extends State<LoginPage> {
               duration: new Duration(seconds: 10),
             ));
       }
-
-
-
     }
-
   }
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -107,7 +98,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         new TextFormField(
                           validator: (input){
-                            if(input.length< 6){
+                            if (input.length < 6) {
                               return 'Your Password is short';
                             }
                           },
@@ -145,9 +136,9 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
-  Future moveToSignUp() {
 
-    Navigator.push(context, MaterialPageRoute(builder: (context)=>SignUpPage(auth: new Auth ())));
+  Future moveToSignUp() {
+//    Navigator.push(context, MaterialPageRoute(builder: (context)=>SignUpPage(auth: new Auth ())));
 
   }
 }

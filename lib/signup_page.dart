@@ -63,7 +63,8 @@ class _SignUpPageState extends State<SignUpPage> {
               content: new Text('User signed in'),
               duration: new Duration(seconds: 10),
             ));
-        Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginPage(auth: new Auth())));
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => LoginPage()));
 
       }
       catch (e){
@@ -81,7 +82,8 @@ class _SignUpPageState extends State<SignUpPage> {
 
 
   Future moveToLogin () {
-    Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginPage(auth: new Auth())));
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => LoginPage()));
   }
 
 

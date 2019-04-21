@@ -111,8 +111,7 @@ class homeState extends State<HomePage> {
               ListTile(
                 title: Text('Logout'),
                 onTap: () {
-
-                  auth.signOut();
+                  _signOut();
                   Navigator.pop(context);
                   Navigator.push(
                       context,
@@ -121,9 +120,14 @@ class homeState extends State<HomePage> {
                       ));
 
 
+
                 })
 
           ]),
         ));
+  }
+
+  Future _signOut() async {
+    await FirebaseAuth.instance.signOut();
   }
 }

@@ -41,8 +41,6 @@ class _RootPageState extends State<RootPage> {
   Widget build(BuildContext context) {
     if (authStatus == AuthStatus.notSignedIn)
       return new LoginPage(
-        auth: widget.auth,
-        onSignedIn: _signedIn
       );
     else
       return new HomePage();
