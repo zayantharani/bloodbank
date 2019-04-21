@@ -94,114 +94,115 @@ class _SignUpPageState extends State<SignUpPage> {
   Widget build(BuildContext context) {
 
     return new Scaffold(
-      resizeToAvoidBottomPadding: false,
+        key: _scaffoldKey,
+        resizeToAvoidBottomPadding: false,
         backgroundColor: Colors.black,
         body: new Stack(fit: StackFit.expand, children: <Widget>[
 
-            new Form(
-              key: _formKey,
-              child: new Theme(
-                data: new ThemeData(
-                    brightness: Brightness.dark,
-                    primarySwatch: Colors.teal,
-                    inputDecorationTheme: new InputDecorationTheme(
-                        labelStyle:
-                            new TextStyle(color: Colors.teal, fontSize: 20.0))),
-                child: new Container(
-                  padding: const EdgeInsets.all(40.0),
-                  child: new Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      new TextFormField(
-                        decoration: new InputDecoration(
-                          labelText: "Full Name",
-                        ),
-                        keyboardType: TextInputType.text,
-                        validator: (input) => input.isEmpty ? 'Full Name cannot be empty' : null,
-                        onSaved: (input) => _fullName = input,
+          new Form(
+            key: _formKey,
+            child: new Theme(
+              data: new ThemeData(
+                  brightness: Brightness.dark,
+                  primarySwatch: Colors.teal,
+                  inputDecorationTheme: new InputDecorationTheme(
+                      labelStyle:
+                      new TextStyle(color: Colors.teal, fontSize: 20.0))),
+              child: new Container(
+                padding: const EdgeInsets.all(40.0),
+                child: new Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    new TextFormField(
+                      decoration: new InputDecoration(
+                        labelText: "Full Name",
                       ),
-                      new TextFormField(
-                        decoration: new InputDecoration(
-                          labelText: "Email",
-                        ),
-                        keyboardType: TextInputType.emailAddress,
-                        validator: (input) => input.isEmpty ? 'Email cannot be empty' : null,
-                        onSaved: (input) => _email= input,
+                      keyboardType: TextInputType.text,
+                      validator: (input) => input.isEmpty ? 'Full Name cannot be empty' : null,
+                      onSaved: (input) => _fullName = input,
+                    ),
+                    new TextFormField(
+                      decoration: new InputDecoration(
+                        labelText: "Email",
                       ),
-                      new TextFormField(
-                        decoration: new InputDecoration(
-                          labelText: "Password",
-                        ),
-                        keyboardType: TextInputType.text,
-                        obscureText: true,
-                        validator: (input) => input.isEmpty ? 'Password cannot be empty' : null,
-                        onSaved: (input) => _password = input,
+                      keyboardType: TextInputType.emailAddress,
+                      validator: (input) => input.isEmpty ? 'Email cannot be empty' : null,
+                      onSaved: (input) => _email= input,
+                    ),
+                    new TextFormField(
+                      decoration: new InputDecoration(
+                        labelText: "Password",
                       ),
-                      new TextFormField(
-                        decoration: new InputDecoration(
-                          labelText: "Phone Number",
-                        ),
-                        keyboardType: TextInputType.text,
-                        validator: (input) => input.isEmpty ? 'Phone Number cannot be empty' : null,
-                        onSaved: (input) => _phoneNumber = input,
+                      keyboardType: TextInputType.text,
+                      obscureText: true,
+                      validator: (input) => input.isEmpty ? 'Password cannot be empty' : null,
+                      onSaved: (input) => _password = input,
+                    ),
+                    new TextFormField(
+                      decoration: new InputDecoration(
+                        labelText: "Phone Number",
                       ),
-                      new TextFormField(
-                        decoration: new InputDecoration(
-                          labelText: "Address",
-                        ),
-                        keyboardType: TextInputType.multiline,
-                        validator: (input) => input.isEmpty ? 'Address cannot be empty' : null,
-                        onSaved: (input) => _address = input,
+                      keyboardType: TextInputType.text,
+                      validator: (input) => input.isEmpty ? 'Phone Number cannot be empty' : null,
+                      onSaved: (input) => _phoneNumber = input,
+                    ),
+                    new TextFormField(
+                      decoration: new InputDecoration(
+                        labelText: "Address",
                       ),
-                      new CheckboxListTile( //                   <--- CheckboxListTile
-                        title: Text('Are you a blood bank?'),
-                        value: _isBloodBank,
-                        onChanged: (newValue) {
-                          displayTable ();
-                          setState(() {
-                            _isBloodBank = newValue;
-                          });
+                      keyboardType: TextInputType.multiline,
+                      validator: (input) => input.isEmpty ? 'Address cannot be empty' : null,
+                      onSaved: (input) => _address = input,
+                    ),
+                    new CheckboxListTile( //                   <--- CheckboxListTile
+                      title: Text('Are you a blood bank?'),
+                      value: _isBloodBank,
+                      onChanged: (newValue) {
+                        displayTable ();
+                        setState(() {
+                          _isBloodBank = newValue;
+                        });
                       },
-                      ),
-                      new Row(
+                    ),
+                    new Row(
                         children: <Widget>[
-                      new Text("Blood Group",style: TextStyle(fontSize: 20.0,fontWeight:  FontWeight.bold, color: Colors.teal)),
-                      new Padding(
-                          padding: const EdgeInsets.only(right: 100.0)
-                      ),
+                          new Text("Blood Group",style: TextStyle(fontSize: 20.0,fontWeight:  FontWeight.bold, color: Colors.teal)),
+                          new Padding(
+                              padding: const EdgeInsets.only(right: 100.0)
+                          ),
 
-                      DropdownButton<String>(
-                          value: _bloodGroup,
-                          onChanged: (String newValue) {
-                            setState(() {
-                              _bloodGroup = newValue;
-                            });
-                          },
-                          items: <String>["A+","A-","B+","B-","O+","O-","AB+","AB-"]
-                              .map<DropdownMenuItem<String>>((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value),
-                            );
-                          }).toList(),
-                      )
-                      ]
-                      ),
+                          DropdownButton<String>(
+                            value: _bloodGroup,
+                            onChanged: (String newValue) {
+                              setState(() {
+                                _bloodGroup = newValue;
+                              });
+                            },
+                            items: <String>["A+","A-","B+","B-","O+","O-","AB+","AB-"]
+                                .map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value),
+                              );
+                            }).toList(),
+                          )
+                        ]
+                    ),
 
-                      new Padding(padding: const EdgeInsets.only(top: 20.0)),
-                      new RaisedButton(
+                    new Padding(padding: const EdgeInsets.only(top: 20.0)),
+                    new RaisedButton(
                         child: new Text("Register"),
-                          onPressed: validateAndSubmit),
-                      new FlatButton(
-                        child: new Text("Have an account? Login"),
-                          onPressed : moveToLogin,
-                      )
-                    ],
-                  ),
+                        onPressed: validateAndSubmit),
+                    new FlatButton(
+                      child: new Text("Have an account? Login"),
+                      onPressed : moveToLogin,
+                    )
+                  ],
                 ),
               ),
-            )
-          ])
+            ),
+          )
+        ])
         );
   }
 }

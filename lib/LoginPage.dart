@@ -1,8 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import 'auth.dart';
+import 'signup_page.dart';
 import 'ui/Home.dart';
-
 class LoginPage extends StatefulWidget {
 
   @override
@@ -138,7 +139,8 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Future moveToSignUp() {
-//    Navigator.push(context, MaterialPageRoute(builder: (context)=>SignUpPage(auth: new Auth ())));
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => SignUpPage(auth: new Auth ())));
 
   }
 }
