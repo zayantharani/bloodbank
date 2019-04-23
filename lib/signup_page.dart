@@ -55,7 +55,8 @@ class _SignUpPageState extends State<SignUpPage> {
           "Phone" : _phoneNumber,
           "isBloodBank" : _isBloodBank,
           "BloodGroup" : _bloodGroup,
-          "Address" : _address
+          "Address" : _address,
+          "requests" : [""],
         });
 
         _scaffoldKey.currentState.showSnackBar(

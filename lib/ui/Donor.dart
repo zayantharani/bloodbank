@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:core';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 //import 'donation_data.dart';
@@ -8,16 +9,16 @@ import 'package:flutter/material.dart';
 
 class DonationData {
 
-  String name, group, num, qty;
+  String name, group, numb, qty;
 
-  DonationData(this.name, this.group, this.num, this.qty);
+  DonationData(this.name, this.group, this.numb, this.qty);
 }
 
 class UserData {
 
-  String id, num;
+  String id, numb;
 
-  UserData(this.id, this.num);
+  UserData(this.id, this.numb);
 }
 
 class Donor extends StatefulWidget {
@@ -72,17 +73,13 @@ class DonorState extends State<Donor> {
         );
         userdata.add(d);
       }
-      print("user data in get data" + userdata [0].num);
-      print("user id in get data" + userdata [0].id);
-      id = userdata[0].id;
-
     });
 
   }
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.redAccent,
@@ -90,14 +87,14 @@ class DonorState extends State<Donor> {
       ),
       body: new Container(
           child: alldata.length == 0
-              ? new Text(' No Data is Available')
+              ? new Text('Loading... ')
               : new ListView.builder(
             itemCount: alldata.length,
             itemBuilder: (_, index) {
               return UI(
                   alldata[index].name,
                   alldata[index].group,
-                  alldata[index].num,
+                  alldata[index].numb,
                   alldata[index].qty
               );
             },
@@ -105,7 +102,7 @@ class DonorState extends State<Donor> {
     );
   }
 
-  Widget UI(String name, String group, String num, String qty) {
+  Widget UI(String name, String group, String numb, String qty) {
     return new Card(
       elevation: 10.0,
       child: new Container(
@@ -115,10 +112,10 @@ class DonorState extends State<Donor> {
           children: <Widget>[
             new Text('Name : $name',style: Theme.of(context).textTheme.title,),
             new Text('Blood Group : $group'),
-            new Text('Phone Number : $num'),
+            new Text('Phone Number : $numb'),
             new Text('Quantity: $qty'),
             new FlatButton(
-              onPressed: () => Alert(num),
+              onPressed: () => Alert(numb),
               child: new Text("DONATE",
                 style: new TextStyle(
                   fontSize: 16,
@@ -132,27 +129,31 @@ class DonorState extends State<Donor> {
     );
   }
 
-  Alert(String num) async {
+  Alert(String numb) async {
+
+    FirebaseAuth auth = FirebaseAuth.instance;
+    final FirebaseUser user = await auth.currentUser();
+    String donorid = user.uid;
+    var recvngid;
+
+    for (int i = 0; i < userdata.length; i++) {
+      if (userdata[i].numb == numb) {
+        recvngid = userdata[i].id;
+        break;
+      }
+    }
+
+    FirebaseDatabase.instance
+        .reference()
+        .child('Users')
+        .child(recvngid)
+        .child('request').push().set(donorid);
 
     var response = await FirebaseDatabase.instance
         .reference()
-        .child("Users").child(userdata[0].id).child('Full Name')
+        .child("Users")
+        .child(recvngid)
+        .child('request')
         .once();
-    String FName = response.value.toString();
-    print("Fname " + FName);
-    String zayan = "Zayan";
-
-    FirebaseDatabase.instance.reference().child('Users').child(userdata[0].id).set({
-      "Full Name" : zayan
-    });
-
-    var response1 = await FirebaseDatabase.instance
-        .reference()
-        .child("Users").child(userdata[0].id).child('Full Name')
-        .once();
-    String FName1 = response.value.toString();
-    print("Fname edited " + FName);
-
-
   }
 }
