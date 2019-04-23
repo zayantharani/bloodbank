@@ -6,20 +6,19 @@ import 'Home.dart';
 import 'package:flutter/cupertino.dart';
 
 class MyHomePage extends StatefulWidget {
-  String _BloodGrp, _Priority;
-  String _Qty;
-  int _PayValue;
+  String _BloodGrp = " ";
+  String _Qty = " ";
 
   MyHomePage(this._Qty, this._BloodGrp);
 
   @override
-  _MyHomePageState createState() => new _MyHomePageState(_Qty, _BloodGrp,);
+  _MyHomePageState createState() => new _MyHomePageState(_Qty, _BloodGrp);
 }
 
 class _MyHomePageState extends State<MyHomePage> {
   DateTime date;
   String _BloodGrp, _Qty, _Priority,fullname,phoneNum;
-  int _PayValue;
+
   _MyHomePageState( this._Qty, this._BloodGrp,);
   static String FName,Phone;
   String DateNow;
@@ -69,7 +68,7 @@ class _MyHomePageState extends State<MyHomePage> {
         builder: (context) {
 
           return  AlertDialog(
-            shape: RoundedRectangleBorder(side: BorderSide(width: 4)),
+            shape: RoundedRectangleBorder(side: BorderSide(width: 1)),
             title: Text(_BloodGrp+" requested to Donors"),
           );
         });
