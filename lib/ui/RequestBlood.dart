@@ -156,7 +156,8 @@ class _RequiredBloodState extends State<RequiredBlood> {
                       ),
                       new TextFormField(
                         textAlign: TextAlign.end,
-                        onSaved: (input) => _PAY = input,
+                        keyboardType: TextInputType.numberWithOptions(),
+                        onSaved: (input) => input.isNotEmpty ? _PAY = input : _PAY = '0',
                         decoration: new InputDecoration(
                           labelText: "Payment",
                           hintText: "0",

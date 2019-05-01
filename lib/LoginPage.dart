@@ -4,6 +4,26 @@ import 'package:flutter/material.dart';
 import 'auth.dart';
 import 'signup_page.dart';
 import 'ui/Home.dart';
+
+class EmailFieldValidator{
+  static String validate(String input){
+    if(input.isEmpty){
+      return 'Please Type an Email.';
+    } else {
+      return null;
+    }
+  }
+}
+
+class PasswordFieldValidator{
+  static String validate(String input){
+    if (input.length < 6) {
+      return 'Password length should be greater than 6.';
+    } else {
+      return null;
+    }
+  }
+}
 class LoginPage extends StatefulWidget {
 
   @override
@@ -86,9 +106,7 @@ class _LoginPageState extends State<LoginPage> {
                       children: <Widget>[
                         new TextFormField(
                           validator: (input){
-                            if(input.isEmpty){
-                              return 'Please Type an Email';
-                            }
+                              EmailFieldValidator.validate(input);
                           },
                           onSaved: (input) => _email = input,
                           decoration: new InputDecoration(
@@ -99,9 +117,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         new TextFormField(
                           validator: (input){
-                            if (input.length < 6) {
-                              return 'Your Password is short';
-                            }
+                            PasswordFieldValidator.validate(input);
                           },
                           onSaved: (input) => _password    = input,
                           decoration: new InputDecoration(

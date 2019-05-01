@@ -171,7 +171,7 @@ Widget profile() {
         if (snapshot.hasData) {
           Map<dynamic, dynamic> data = snapshot.data.value;
           print(data['Full Name'].toString());
-          return new Card(margin: EdgeInsets.all(10.0),color: Colors.white12,elevation: 5,child: new Container(padding: EdgeInsets.all(10.0),
+          return new Container(padding: EdgeInsets.all(10.0),
             child: new Column(
               children: <Widget>[
                 new Container(
@@ -204,7 +204,7 @@ Widget profile() {
                 ),
               ],
             ),
-          ));
+          );
         } else {
           return new Center(child: CircularProgressIndicator());
         }
