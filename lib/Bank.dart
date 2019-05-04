@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-
-import './Donor.dart';
-import './Home.dart';
-import './RequestBlood.dart';
-import './Settings.dart';
+import 'package:bloodbank/ui/Donor.dart';
+import 'package:bloodbank/ui/Home.dart';
+import 'package:bloodbank/ui/RequestBlood.dart';
+import 'package:bloodbank/ui/Settings.dart';
 
 class Bank extends StatefulWidget {
   @override

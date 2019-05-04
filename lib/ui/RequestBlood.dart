@@ -11,7 +11,7 @@ class _RequiredBloodState extends State<RequiredBlood> {
 
 
   double result = 0.0;
-  String finalResult = "";
+  String finalResult = "Yes";
   int radio = 0;
   inputChange(String val){
     setState((){
@@ -105,6 +105,7 @@ class _RequiredBloodState extends State<RequiredBlood> {
                 ) ,
                 child:
                 new Container(
+              
                   padding: const EdgeInsets.all(40.0),
                   child: new Column(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -154,27 +155,44 @@ class _RequiredBloodState extends State<RequiredBlood> {
                         ],
 
                       ),
-                      new TextFormField(
-                        textAlign: TextAlign.end,
-                        keyboardType: TextInputType.numberWithOptions(),
-                        onSaved: (input) => input.isNotEmpty ? _PAY = input : _PAY = '0',
-                        decoration: new InputDecoration(
-                          labelText: "Payment",
-                          hintText: "0",
-                          contentPadding: EdgeInsets.all(10)
-                        ),
+                  new Row(
+
+                        children: <Widget>[
+                          new Text("Payment",style: TextStyle(fontSize: 20.0,fontWeight:  FontWeight.bold),),
+                          new Padding(padding: EdgeInsets.only(left: 40.0),),
+                          new Radio<int>(
+                              activeColor: Colors.green,
+                              value: 0,
+                              groupValue: radio,
+                              onChanged: getWeight),
+                          
+                          new Text(
+                            "Yes",
+                            style: new TextStyle(color: Colors.black),
+                          ),
+                          new Radio<int>(
+                              activeColor: Colors.red,
+                              value: 1,
+                              groupValue: radio,
+                              onChanged: getWeight),
+                          new Text(
+                            "No",
+                            style: new TextStyle(color: Colors.black),
+                          ),
+                        ],
                       ),
                       new Padding(padding: EdgeInsets.all(20.5)),
                       new Center(
                         child: Container(
                           child: new RaisedButton(
+                          
                             color: Colors.redAccent,
                             child: new Text("Request",style: TextStyle(color: Colors.white),),
                             onPressed: (){
                              print("BLOOD GRP = "+ _BloodGrp.toString());
                              print("Quantity = "+ _Qty.toString());
-
-                              Navigator.push(context,MaterialPageRoute(builder: (context)=>MyHomePage(_Qty, _BloodGrp)));
+                              print("RAdio Value is "+ finalResult);
+                                    Navigator.push(context,MaterialPageRoute(builder: (context)=>MyHomePage(_Qty, _BloodGrp,finalResult)));
                               },
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(30.0)

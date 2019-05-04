@@ -5,7 +5,7 @@ import 'package:bloodbank/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import './Bank.dart';
+import 'package:bloodbank/Bank.dart';
 import './Donor.dart';
 import './RequestBlood.dart';
 import './Settings.dart';

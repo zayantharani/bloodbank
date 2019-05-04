@@ -8,18 +8,19 @@ import 'package:flutter/cupertino.dart';
 class MyHomePage extends StatefulWidget {
   String _BloodGrp = " ";
   String _Qty = " ";
+  String payment = " ";
 
-  MyHomePage(this._Qty, this._BloodGrp);
+  MyHomePage(this._Qty, this._BloodGrp,this.payment);
 
   @override
-  _MyHomePageState createState() => new _MyHomePageState(_Qty, _BloodGrp);
+  _MyHomePageState createState() => new _MyHomePageState(_Qty, _BloodGrp,payment);
 }
 
 class _MyHomePageState extends State<MyHomePage> {
   DateTime date;
   String _BloodGrp, _Qty, _Priority,fullname,phoneNum;
-
-  _MyHomePageState( this._Qty, this._BloodGrp,);
+   String payment;
+  _MyHomePageState( this._Qty, this._BloodGrp,this.payment);
   static String FName,Phone;
   String DateNow;
   final DatabaseReference database = FirebaseDatabase.instance.reference().child("RequiredBlood");
@@ -61,8 +62,8 @@ class _MyHomePageState extends State<MyHomePage> {
       'Full name': FName,
       'Phone num': Phone,
       'Date:' : DateNow,
+      'Payment':payment,
     });
-
     showDialog(
         context: context,
         builder: (context) {
@@ -120,14 +121,14 @@ class _MyHomePageState extends State<MyHomePage> {
                         new Text(
                           "Blood Group    ",
                           style: TextStyle(
-                              fontSize: 15,
+                              fontSize: 20,
                               fontFamily: 'Montserrat',
                               fontWeight: FontWeight.bold),
                         ),
                         new Text(
                           _BloodGrp,
                           style: TextStyle(
-                              fontSize: 15,
+                              fontSize: 20,
                               fontFamily: 'Montserrat',
                               fontWeight: FontWeight.bold),
                         )
@@ -139,14 +140,14 @@ class _MyHomePageState extends State<MyHomePage> {
                         new Text(
                           "Quantity   ",
                           style: TextStyle(
-                              fontSize: 15,
+                              fontSize: 20,
                               fontFamily: 'Montserrat',
                               fontWeight: FontWeight.bold),
                         ),
                         new Text(
                           _Qty,
                           style: TextStyle(
-                              fontSize: 15,
+                              fontSize: 20,
                               fontFamily: 'Montserrat',
                               fontWeight: FontWeight.bold),
                         )
@@ -159,14 +160,14 @@ class _MyHomePageState extends State<MyHomePage> {
                         new Text(
                           "Phone    ",
                           style: TextStyle(
-                              fontSize: 15,
+                              fontSize: 20,
                               fontFamily: 'Montserrat',
                               fontWeight: FontWeight.bold),
                         ),
                         new Text(
                           Phone,
                           style: TextStyle(
-                              fontSize: 15,
+                              fontSize: 20,
                               fontFamily: 'Montserrat',
                               fontWeight: FontWeight.bold),
                         )
@@ -183,14 +184,14 @@ class _MyHomePageState extends State<MyHomePage> {
                         new Text(
                           "Date    ",
                           style: TextStyle(
-                              fontSize: 15,
+                              fontSize: 20,
                               fontFamily: 'Montserrat',
                               fontWeight: FontWeight.bold),
                         ),
                         new Text(
                           DateNow,
                           style: TextStyle(
-                              fontSize: 15,
+                              fontSize: 20,
                               fontFamily: 'Montserrat',
                               fontWeight: FontWeight.bold),
                         )
@@ -201,18 +202,27 @@ class _MyHomePageState extends State<MyHomePage> {
 
                     SizedBox(height: 15.0),
 
+                    new Row(
+                      children: <Widget>[
+                        new Text(
+                          "Payment    ",
+                          style: TextStyle(
+                              fontSize: 20,
+                              fontFamily: 'Montserrat',
+                              fontWeight: FontWeight.bold),
+                        ),
+                        new Text(
+                          payment,
+                          style: TextStyle(
+                              fontSize: 20,
+                              fontFamily: 'Montserrat',
+                              fontWeight: FontWeight.bold),
+                        )
+                      ],
+                    ),
 
 
-
-
-
-
-
-
-
-
-
-
+                    SizedBox(height: 25.0),
 
 
 
