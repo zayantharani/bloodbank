@@ -64,27 +64,27 @@ class homeState extends State<HomePage> {
                   style: TextStyle(
                       letterSpacing: .5,
                       fontSize: 23.0,
-                      color: Colors.teal,
+                      color: Colors.white,
                       fontWeight: FontWeight.w600),
                 ),
                 decoration: BoxDecoration(
-                  color: Colors.black,
+                  color: Colors.redAccent,
                 ),
               ),
             ),
-            ListTile(
-              title: Text('View Blood Banks'),
-              onTap: () {
-                Navigator.pop(context);
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => Bank(),
-                    ));
-                // Update the state of the app
-                // ...
-              },
-            ),
+//            ListTile(
+//              title: Text('View Blood Banks'),
+//              onTap: () {
+//                Navigator.pop(context);
+//                Navigator.push(
+//                    context,
+//                    MaterialPageRoute(
+//                      builder: (context) => Bank(),
+//                    ));
+//                // Update the state of the app
+//                // ...
+//              },
+//            ),
             ListTile(
               title: Text('Donate'),
               onTap: () {
@@ -111,19 +111,19 @@ class homeState extends State<HomePage> {
                 // ...
               },
             ),
-            ListTile(
-              title: Text('Settings'),
-              onTap: () {
-                Navigator.pop(context);
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => Settings(),
-                    ));
-                // Update the state of the app
-                // ...
-              },
-            ),
+//            ListTile(
+//              title: Text('Settings'),
+//              onTap: () {
+//                Navigator.pop(context);
+//                Navigator.push(
+//                    context,
+//                    MaterialPageRoute(
+//                      builder: (context) => Settings(),
+//                    ));
+//                // Update the state of the app
+//                // ...
+//              },
+//            ),
             ListTile(
                 title: Text('Logout'),
                 onTap: () {
@@ -197,6 +197,12 @@ Widget profile() {
                 ),
                 new Container(
                   child: new Text("BloodGroup: ${data['BloodGroup']}",
+                      style: Theme.of(context).textTheme.title),
+                  alignment: Alignment.centerLeft,
+                  padding: EdgeInsets.fromLTRB(20.0, 20.0, 0.0, 0.0),
+                  margin: EdgeInsets.all(0.0),
+                ),new Container(
+                  child: new Text("No. of Donations: ${data['DonationCount']}",
                       style: Theme.of(context).textTheme.title),
                   alignment: Alignment.centerLeft,
                   padding: EdgeInsets.fromLTRB(20.0, 20.0, 0.0, 20.0),

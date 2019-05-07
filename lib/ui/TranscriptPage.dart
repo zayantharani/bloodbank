@@ -9,7 +9,7 @@ class MyHomePage extends StatefulWidget {
   String _BloodGrp = " ";
   String _Qty = " ";
   String payment = " ";
-
+  int BDcount;
   MyHomePage(this._Qty, this._BloodGrp,this.payment);
 
   @override
@@ -23,7 +23,9 @@ class _MyHomePageState extends State<MyHomePage> {
   _MyHomePageState( this._Qty, this._BloodGrp,this.payment);
   static String FName,Phone;
   String DateNow;
+  int DonorCount;
   final DatabaseReference database = FirebaseDatabase.instance.reference().child("RequiredBlood");
+  final DatabaseReference database2 = FirebaseDatabase.instance.reference().child("Users");
   FirebaseAuth auth = FirebaseAuth.instance;
   @override
   void initState() {
@@ -47,14 +49,24 @@ class _MyHomePageState extends State<MyHomePage> {
         .reference()
         .child("Users").child(user.uid).child('Phone')
         .once();
+    var response3 = await FirebaseDatabase.instance
+        .reference()
+        .child("Users").child(user.uid).child('DonationCount')
+        .once();
 
     FName = response.value.toString();
     Phone = response2.value.toString();
+    DonorCount = response3.value;
+
   }
 
 
 
-  _savedData() {
+  _savedData() async{
+    final FirebaseUser user2 = await auth.currentUser();
+    print("The value is");
+//    DonorCount = DonorCount + 1;
+//    print(DonorCount.toString());
 
     database.push().set({
       'Blood Group': _BloodGrp,
@@ -64,6 +76,11 @@ class _MyHomePageState extends State<MyHomePage> {
       'Date:' : DateNow,
       'Payment':payment,
     });
+
+    database2.child(user2.uid).update({
+      "Blood Donor Count": DonorCount,
+    });
+
     showDialog(
         context: context,
         builder: (context) {
@@ -74,10 +91,10 @@ class _MyHomePageState extends State<MyHomePage> {
           );
         });
 
-    Future.delayed(Duration(seconds: 1), () {
-        Navigator.of(context).pop(true);
-      Navigator.push(context, MaterialPageRoute(builder: (context)=>HomePage()));
-    });
+//    Future.delayed(Duration(seconds: 1), () {
+//        Navigator.of(context).pop(true);
+//      Navigator.push(context, MaterialPageRoute(builder: (context)=>HomePage()));
+//    });
   }
 
   @override

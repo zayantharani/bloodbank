@@ -4,18 +4,17 @@ import 'dart:core';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+
 //import 'donation_data.dart';
 //made by sateesh
 
 class DonationData {
-
   String name, group, numb, qty;
 
   DonationData(this.name, this.group, this.numb, this.qty);
 }
 
 class UserData {
-
   String id, numb;
 
   UserData(this.id, this.numb);
@@ -34,52 +33,41 @@ class DonorState extends State<Donor> {
 
   @override
   void initState() {
-
     DatabaseReference ref = FirebaseDatabase.instance.reference();
-    ref.child("RequiredBlood").once().then((DataSnapshot snap){
-
+    ref.child("RequiredBlood").once().then((DataSnapshot snap) {
       var keys = snap.value.keys;
       var data = snap.value;
       alldata.clear();
-      for(var key in keys) {
+      for (var key in keys) {
         DonationData d = new DonationData(
             data[key]['Full name'],
             data[key]['Blood Group'],
             data[key]['Phone num'],
-            data[key]['Quantity']
-        );
+            data[key]['Quantity']);
         alldata.add(d);
       }
       getdata();
-      setState(() {
-      });
+      setState(() {});
     });
   }
 
   Future<String> getdata() async {
-
     String id;
     DatabaseReference ref = FirebaseDatabase.instance.reference();
-    ref.child("Users").once().then((DataSnapshot snap){
-
+    ref.child("Users").once().then((DataSnapshot snap) {
       var keys = snap.value.keys;
       var data = snap.value;
       userdata.clear();
-      for(var key in keys) {
+      for (var key in keys) {
         id = key;
-        UserData d = new UserData(
-            id,
-            data[key]['Phone']
-        );
+        UserData d = new UserData(id, data[key]['Phone']);
         userdata.add(d);
       }
     });
-
   }
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.redAccent,
@@ -89,16 +77,12 @@ class DonorState extends State<Donor> {
           child: alldata.length == 0
               ? new Text('Loading... ')
               : new ListView.builder(
-            itemCount: alldata.length,
-            itemBuilder: (_, index) {
-              return UI(
-                  alldata[index].name,
-                  alldata[index].group,
-                  alldata[index].numb,
-                  alldata[index].qty
-              );
-            },
-          )),
+                  itemCount: alldata.length,
+                  itemBuilder: (_, index) {
+                    return UI(alldata[index].name, alldata[index].group,
+                        alldata[index].numb, alldata[index].qty);
+                  },
+                )),
     );
   }
 
@@ -110,13 +94,18 @@ class DonorState extends State<Donor> {
         child: new Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            new Text('Name : $name',style: Theme.of(context).textTheme.title,),
+            new Text(
+              'Name : $name',
+              style: Theme.of(context).textTheme.title,
+            ),
             new Text('Blood Group : $group'),
             new Text('Phone Number : $numb'),
             new Text('Quantity: $qty'),
             new FlatButton(
-              onPressed: () => Alert(numb),
-              child: new Text("DONATE",
+//              onPressed: () => Alert(numb),
+              onPressed: () => _showDialog(numb),
+              child: new Text(
+                "DONATE",
                 style: new TextStyle(
                   fontSize: 16,
                   color: Colors.green[400],
@@ -129,8 +118,26 @@ class DonorState extends State<Donor> {
     );
   }
 
-  Alert(String numb) async {
+  void _showDialog(numb) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return new AlertDialog(
+            title: new Text("Congratulations, You have saved a life"),
+//            content: new Text("Alert Dialog body"),
+            actions: <Widget>[
+              new FlatButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: new Text("Close")),
+            ],
+          );
+        });
+  Alert(numb);
+  }
 
+  Alert(String numb) async {
     FirebaseAuth auth = FirebaseAuth.instance;
     final FirebaseUser user = await auth.currentUser();
     String donorid = user.uid;
@@ -147,7 +154,9 @@ class DonorState extends State<Donor> {
         .reference()
         .child('Users')
         .child(recvngid)
-        .child('request').push().set(donorid);
+        .child('request')
+        .push()
+        .set(donorid);
 
     var response = await FirebaseDatabase.instance
         .reference()
@@ -155,5 +164,20 @@ class DonorState extends State<Donor> {
         .child(recvngid)
         .child('request')
         .once();
+
+    var response3 = await FirebaseDatabase.instance
+        .reference()
+        .child("Users")
+        .child(donorid)
+        .child('DonationCount')
+        .once();
+
+    int DonorCount = response3.value;
+    DonorCount++;
+    final DatabaseReference database2 =
+        FirebaseDatabase.instance.reference().child("Users");
+    database2.child(donorid).update({
+      "DonationCount": DonorCount,
+    });
   }
 }

@@ -30,6 +30,7 @@ class _SignUpPageState extends State<SignUpPage> {
   String _address;
   bool _isBloodBank = false;
   String _bloodGroup;
+  int BloodCount  = 0;
 
   bool validateAndSave() {
     final form = _formKey.currentState;
@@ -56,7 +57,8 @@ class _SignUpPageState extends State<SignUpPage> {
           "isBloodBank" : _isBloodBank,
           "BloodGroup" : _bloodGroup,
           "Address" : _address,
-          "requests" : [""],
+          "DonationCount":BloodCount,
+//          "Blood Donate Count":BloodCount,
         });
 
         _scaffoldKey.currentState.showSnackBar(
